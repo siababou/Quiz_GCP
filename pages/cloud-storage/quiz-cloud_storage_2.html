@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz interactif - Data Warehouse</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2f7;
+      padding: 30px;
+    }
+    .quiz-box {
+      background: white;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: auto;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 30px;
+    }
+    h3 {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin: 6px 0;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 10px;
+      background: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .feedback {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+    #final-score {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-box">
+    <h1>Quiz : Entrepôt de Données Moderne</h1>
+
+    <div class="question" data-answer="c">
+      <h3>1. Quelle est la principale différence entre un data lake et un data warehouse ?</h3>
+      <label><input type="radio" name="q1" value="a"> a) Le data warehouse stocke uniquement des images</label>
+      <label><input type="radio" name="q1" value="b"> b) Le data lake nettoie automatiquement les données</label>
+      <label><input type="radio" name="q1" value="c"> c) Le data warehouse impose un schéma structuré</label>
+      <label><input type="radio" name="q1" value="d"> d) Le data lake est plus rapide</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question" data-answer="b">
+      <h3>2. Pourquoi un data warehouse moderne doit-il être « serverless » ?</h3>
+      <label><input type="radio" name="q2" value="a"> a) Pour mieux fonctionner hors ligne</label>
+      <label><input type="radio" name="q2" value="b"> b) Pour éviter la gestion des clusters</label>
+      <label><input type="radio" name="q2" value="c"> c) Pour limiter les utilisateurs</label>
+      <label><input type="radio" name="q2" value="d"> d) Pour réduire la bande passante</label>
+      <div class="feedback"></div>
+    </div>
+
+    <div class="question" data-answer="c">
+      <h3>3. Pourquoi la visualisation est-elle essentielle dans un data warehouse ?</h3>
+      <label><input type="radio" name="q3" value="a"> a) Pour produire automatiquement des vidéos</label>
+      <label><input type="radio" name="q3" value="b"> b) Pour décorer l’interface</label>
+      <label><input type="radio" name="q3" value="c"> c) Pour une prise de décision rapide</label>
+      <label><input type="radio" name="q3" value="d"> d) Pour stocker des images satellites</label>
+      <div class="feedback"></div>
+    </div>
+
+    <button onclick="checkAllAnswers()">Vérifier toutes les réponses</button>
+
+    <div id="final-score"></div>
+  </div>
+
+  <script>
+    let score = 0;
+    const totalQuestions = document.querySelectorAll('.question').length;
+
+    function checkAllAnswers() {
+      const questions = document.querySelectorAll('.question');
+      let answered = 0;
+
+      questions.forEach(question => {
+        const correctAnswer = question.getAttribute('data-answer');
+        const selected = question.querySelector(`input[type="radio"]:checked`);
+        const feedback = question.querySelector('.feedback');
+
+        if (!selected) {
+          feedback.textContent = "❗ Sélectionnez une réponse.";
+          feedback.className = "feedback incorrect";
+        } else {
+          if (selected.value === correctAnswer) {
+            feedback.textContent = "✅ Bonne réponse !";
+            feedback.className = "feedback correct";
+            score++;
+          } else {
+            feedback.textContent = `❌ Mauvaise réponse. Réponse correcte : ${correctAnswer}`;
+            feedback.className = "feedback incorrect";
+          }
+        }
+
+        answered++;
+
+        if (answered === totalQuestions) {
+          document.getElementById('final-score').textContent =
+            `🎯 Score final : ${score} / ${totalQuestions}`;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
