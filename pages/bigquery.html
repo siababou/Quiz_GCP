@@ -1,44 +1,159 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Introduction à BigQuery</title>
-  <link rel="stylesheet" href="../assets/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction aux Lacs de Données</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        ul {
+            margin-bottom: 15px;
+        }
+        .highlight {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #f0f8ff;
+            padding: 10px;
+            border: 1px solid #b0e0e6;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Introduction à BigQuery</h1>
 
-  <p>
-    Il existe une méthode bien plus efficace pour gérer la charge des serveurs et se concentrer sur l’analyse des données : utiliser un entrepôt de données <strong>serverless</strong>.
-    <strong>BigQuery</strong>, l’entrepôt de données de Google Cloud à l’échelle du pétaoctet, permet cela. Il n’est pas nécessaire de gérer des clusters ; il suffit de se concentrer sur les <strong>informations à extraire</strong>.
-  </p>
+    <h1>1. Introduction aux lacs de données</h1>
 
-  <p>
-    BigQuery remplace l'infrastructure matérielle traditionnelle des entrepôts de données et sert de <strong>référentiel central</strong> pour toutes les données analytiques d'une organisation.
-    Les <em>datasets</em> (jeux de données) sont des ensembles de tables regroupées par domaine métier ou analytique, et chaque dataset est lié à un projet Google Cloud.
-  </p>
+    <h2>a. 📦 Qu’est-ce qu’un Data Lake ?</h2>
+    <p>Un <strong>Data Lake</strong> est un espace de stockage centralisé capable de recevoir toutes formes de données, à n’importe quelle échelle, vitesse, et format. Il est utilisé pour :</p>
+    <ul>
+        <li>Le stockage brut de données hétérogènes.</li>
+        <li>Alimenter des pipelines de traitement, de l’analyse de données, du Machine Learning.</li>
+        <li>Être portable : déployé on-premise ou dans le cloud.</li>
+    </ul>
 
-  <p>
-    BigQuery peut aussi interroger des données <strong>externes</strong> (dans Cloud Storage, Google Drive, Bigtable, etc.) grâce à l’approche des <em>sources fédérées</em>, sans avoir besoin de les importer.
-  </p>
+    <h2>b. ✅ Un Data Lake peut gérer :</h2>
+    <ol>
+        <li><strong>Tous les types de données :</strong>
+            <ul>
+                <li>🟢 <strong>Structurées</strong> (ex : bases de données relationnelles)</li>
+                <li>🟢 <strong>Semi-structurées</strong> (ex : JSON, XML)</li>
+                <li>🟢 <strong>Non structurées</strong> (ex : vidéos, images, fichiers logs)</li>
+            </ul>
+        </li>
+        <li><strong>Tous les modes de traitement :</strong>
+            <ul>
+                <li>🔵 <strong>Batch</strong> (traitement en lots)</li>
+                <li>🔵 <strong>Streaming</strong> (traitement en temps réel)</li>
+            </ul>
+        </li>
+        <li><strong>Tous les types d’usage :</strong>
+            <ul>
+                <li>🟡 <strong>SQL</strong> (requêtes)</li>
+                <li>🟡 <strong>ML/IA</strong> (modèles de machine learning, intelligence artificielle)</li>
+                <li>🟡 <strong>Search</strong> (recherche rapide)</li>
+            </ul>
+        </li>
+        <li><strong>Toutes les localisations d’infrastructure :</strong>
+            <ul>
+                <li>🔴 <strong>On-Prem</strong> (sur site, dans les locaux)</li>
+                <li>🔴 <strong>Cloud</strong> (dans un service cloud comme Google Cloud)</li>
+                <li>🔴 <strong>Edge</strong> (au plus proche des objets connectés ou utilisateurs)</li>
+            </ul>
+        </li>
+    </ol>
 
-  <p>
-    Les <strong>tables</strong> et <strong>vues</strong> fonctionnent comme dans un entrepôt classique, et BigQuery utilise un SQL conforme à la norme <strong>ANSI 2011</strong>.
-    La gestion des accès est assurée via <strong>IAM (Identity and Access Management)</strong>, remplaçant les commandes SQL classiques comme <code>GRANT</code> et <code>REVOKE</code>.
-  </p>
+    <h2>c. 🧱 Rôle du Data Lake dans l’écosystème data engineering</h2>
+    <p>Un Data Lake intervient après les systèmes sources et avant l’entrepôt de données (Data Warehouse) :</p>
+    <ul>
+        <li><strong>Data Sources</strong> → Systèmes à l’origine des données (ex : applications, logs).</li>
+        <li><strong>Récepteurs de données (Data sinks)</strong>
+            <ul>
+                <li>Data Lake → Stocke les données brutes, sans transformation préalable.</li>
+                <li>Data Warehouse → Stocke les données structurées, prêtes à l’analyse.</li>
+            </ul>
+        </li>
+        <li><strong>Data Pipelines</strong> → Transforment et nettoient les données.</li>
+        <li><strong>Orchestration de haut niveau</strong> → Coordination des tâches et dépendances entre pipelines et traitements.</li>
+    </ul>
 
-  <p>
-    Le cloud permet aux ingénieurs data de <strong>se concentrer sur des tâches à forte valeur ajoutée</strong>, plutôt que sur la gestion du matériel.
-    Il n’est plus nécessaire de prévoir à l’avance des ressources : BigQuery les alloue automatiquement en fonction des besoins.
-  </p>
+    <h2>d. 🔄 De la donnée brute à la valeur métier</h2>
+    <p><strong>Data Lake</strong> = lieu de stockage des matières premières (ex : béton, acier, bois).</p>
+    <p><strong>Data Pipelines</strong> = Les ouvriers qui transforment ces matériaux (VMs qui exécutent les tâches).</p>
+    <p><strong>Data Warehouse</strong> = Lieu de stockage des matériaux prêts à l’usage (verre taillé, bois découpé).</p>
+    <p><strong>Produit final</strong> = La valeur métier (ex : modèle ML, dashboards, nouvelles analyses).</p>
+    <p><strong>Orchestration</strong> (ex : Cloud Composer / Airflow) = Le chef de chantier qui coordonne les étapes.</p>
 
-  <p>
-    Le <strong>stockage</strong> est attribué dynamiquement à mesure que les données sont utilisées, et libéré quand elles sont supprimées.
-    Les <strong>ressources de requête</strong> (slots, combinant CPU et RAM) sont également attribuées selon la complexité des requêtes.
-  </p>
+    <h2>e. 🔧 Exemple de flux orchestré</h2>
+    <ol>
+        <li>Fichier CSV détecté dans un bucket Cloud Storage.</li>
+        <li>Déclenchement d’un pipeline qui nettoie les données.</li>
+        <li>Données injectées dans BigQuery (Data Warehouse).</li>
+        <li>Modèle ML notifié → Lance un nouvel entraînement.</li>
+    </ol>
 
-  <a href="bigquery/quiz-bigquery_1.html">→ Passer au quiz</a>
-  <br>
-  <a href="/Quiz_GCP/">← Retour à l'accueil</a>
-</body>
-</html>
+    <h2>f. ☁️ Les produits Google Cloud pour les Data Lakes</h2>
+    <ul>
+        <li><strong>Cloud Storage</strong> → Pour stocker tous types de données brutes (logs, JSON, fichiers, etc.)</li>
+        <li><strong>Cloud SQL</strong> → Pour stocker des données relationnelles brutes (prétraitement possible avant entrepôt).</li>
+        <li><strong>Bigtable</strong> → Pour des flux haute fréquence (utilisé dans les pipelines de streaming).</li>
+        <li><strong>BigQuery</strong> → Souvent utilisé comme Data Warehouse, mais peut aussi servir de Data Lake selon les cas.</li>
+    </ul>
+
+    <h2>g. 📊 Différences entre Data Lake et Data Warehouse</h2>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Data Lake</th>
+                <th>Data Warehouse</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Stockage brut et flexible</td>
+                <td>Stockage structuré et organisé</td>
+            </tr>
+            <tr>
+                <td>Formats variés : JSON, logs, CSV…</td>
+                <td>Formats bien définis (tables, colonnes)</td>
+            </tr>
+            <tr>
+                <td>Haute capacité de stockage</td>
+                <td>Haute performance pour requêtes analytiques</td>
+            </tr>
+            <tr>
+                <td>Données prêtes à être transformées</td>
+                <td>Données prêtes à être analysées</td>
+            </tr>
+            <tr>
+                <td>Exemples : Cloud Storage, Bigtable</td>
+                <td>Exemples : BigQuery, Cloud SQL (analytique)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>h. 🎯 Conclusion</h2>
+    <p><strong>Le Data Lake</strong> est la porte d’entrée vers votre plateforme analytique :</p>
+    <ul>
+        <li>Il capture tout, sans contrainte.</li>
+        <li>Il sert de zone tampon avant les traitements.</li>
+        <li>Il est hautement disponible, durable, scalable.</li>
+        <li>Il permet à votre entreprise de garder l’historique brut des événements.</li>
+    </ul>
+    <p><span class="highlight">À retenir :</span> Commencez par collecter les données dans votre Data Lake, transformez-les via des pipelines, structurez-les dans un Data Warehouse, puis exploitez-les via des outils d’analyse ou de Machine Learning.</p>
+
+    <a href="bigquery/quiz-bigquery_1.html">→ Passer au quiz</a>
+    <br>
+    <a href="/Quiz_GCP/">← Retour à l'accueil</a>
+  </body>
+  </html>

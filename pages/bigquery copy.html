@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Introduction à BigQuery</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <h1>Introduction à BigQuery</h1>
+
+  <p>
+    Il existe une méthode bien plus efficace pour gérer la charge des serveurs et se concentrer sur l’analyse des données : utiliser un entrepôt de données <strong>serverless</strong>.
+    <strong>BigQuery</strong>, l’entrepôt de données de Google Cloud à l’échelle du pétaoctet, permet cela. Il n’est pas nécessaire de gérer des clusters ; il suffit de se concentrer sur les <strong>informations à extraire</strong>.
+  </p>
+
+  <p>
+    BigQuery remplace l'infrastructure matérielle traditionnelle des entrepôts de données et sert de <strong>référentiel central</strong> pour toutes les données analytiques d'une organisation.
+    Les <em>datasets</em> (jeux de données) sont des ensembles de tables regroupées par domaine métier ou analytique, et chaque dataset est lié à un projet Google Cloud.
+  </p>
+
+  <p>
+    BigQuery peut aussi interroger des données <strong>externes</strong> (dans Cloud Storage, Google Drive, Bigtable, etc.) grâce à l’approche des <em>sources fédérées</em>, sans avoir besoin de les importer.
+  </p>
+
+  <p>
+    Les <strong>tables</strong> et <strong>vues</strong> fonctionnent comme dans un entrepôt classique, et BigQuery utilise un SQL conforme à la norme <strong>ANSI 2011</strong>.
+    La gestion des accès est assurée via <strong>IAM (Identity and Access Management)</strong>, remplaçant les commandes SQL classiques comme <code>GRANT</code> et <code>REVOKE</code>.
+  </p>
+
+  <p>
+    Le cloud permet aux ingénieurs data de <strong>se concentrer sur des tâches à forte valeur ajoutée</strong>, plutôt que sur la gestion du matériel.
+    Il n’est plus nécessaire de prévoir à l’avance des ressources : BigQuery les alloue automatiquement en fonction des besoins.
+  </p>
+
+  <p>
+    Le <strong>stockage</strong> est attribué dynamiquement à mesure que les données sont utilisées, et libéré quand elles sont supprimées.
+    Les <strong>ressources de requête</strong> (slots, combinant CPU et RAM) sont également attribuées selon la complexité des requêtes.
+  </p>
+
+  <a href="bigquery/quiz-bigquery_1.html">→ Passer au quiz</a>
+  <br>
+  <a href="/Quiz_GCP/">← Retour à l'accueil</a>
+</body>
+</html>
